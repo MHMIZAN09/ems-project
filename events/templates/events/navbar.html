@@ -6,15 +6,17 @@
     <title>{% block title %}navbar{% endblock title %}</title>
   </head>
   <body>
-    <nav class="flex justify-between px-8  shadow-md py-4">
-      <h1 class="text-3xl font-bold text-blue-700">EMS</h1>
-      <ul class="flex justify-center items-center text-lg">
-      <li class="mr-6 text-gray-700 hover:text-blue-700 font-medium cursor-pointer"><a href="#">Home</a></li>
-      <li class="mr-6 text-gray-700 hover:text-blue-700 font-medium cursor-pointer"><a href="#">About</a></li>
-      <li class="mr-6 text-gray-700 hover:text-blue-700 font-medium cursor-pointer"><a href="#">Category</a></li>
-      <li class="mr-6 text-gray-700 hover:text-blue-700 font-medium cursor-pointer"><a href="#">Events</a></li>
-      <li class="mr-6 text-gray-700 hover:text-blue-700 font-medium cursor-pointer"><a href="#">Dashboard</a></li>
-      </ul>
+    <nav class="flex justify-between px-8 shadow-md py-4 bg-gray-100">
+      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="{% url 'home' %}" class="text-2xl font-bold text-blue-600">EMS</a>
+      <div class="space-x-6">
+        <a href="{% url 'home' %}" class="hover:text-blue-600">Home</a>
+        <a href="{% url "event_list" %}" class="hover:text-blue-600">Events</a>
+        <a href="{% url "participant_list" %}" class="hover:text-blue-600">Participants</a>
+        <a href="{% url "category_list" %}" class="hover:text-blue-600">Categories</a>
+        <a href="{% url "dashboard" %}" class="hover:text-blue-600">Dashboard</a>
+      </div>
+      </div>
     </nav>
   </body>
 </html>

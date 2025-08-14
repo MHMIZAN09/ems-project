@@ -2,16 +2,27 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static "css/output.css" %}"> <link
-    rel="stylesheet" href="{% static "css/style.css" %}">
-  </head>
-  <body >
-    <header >{% include "events/navbar.html" %}</header>
-    <main>{% block content %}{% endblock content %}</main>
-    <footer></footer>
-  </body>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50">
+
+    <!-- Header / Navbar -->
+    <header>
+        {% include "events/navbar.html" %}
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 container mx-auto px-4 py-6">
+        {% block content %}{% endblock content %}
+    </main>
+
+    <!-- Footer -->
+   
+
+</body>
 </html>

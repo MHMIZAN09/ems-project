@@ -2,27 +2,46 @@
 {% block content %}
 <div>
   {% comment %}hero section {% endcomment %}
-  <div class="bg-red-500 h-96 bg-cover bg-center">
+  <div class="bg-red-500 h-96 bg-cover bg-center mb-6">
     <div class="flex justify-center items-center h-full">
       <h1 class="text-5xl text-white font-bold">Welcome to Event Management</h1>
     </div>
-    
   </div>
-  <section
-    class="bg-green-100 mx-auto flex justify-center items-center py-8"
-  >
-    <form action="" class="flex gap-4 items-center bg-white rounded-lg shadow-lg p-6">
-      <input
-        type="search"
-        class="p-4 text-black w-[400px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300 transition"
-        placeholder="Search by event name"
-        name=""
-        id=""
-      />
-      <button class="bg-red-500 hover:bg-red-600 text-white p-4 rounded-lg font-semibold shadow transition">
-        Search
-      </button>
-    </form>
+
+  <!-- Events Grid -->
+  <section class="mt-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for event in events %}
+      <div
+        class="bg-white rounded-lg shadow hover:shadow-xl transition p-6 flex flex-col justify-between"
+      >
+        <h2 class="text-2xl font-semibold mb-2">{{ event.name }}</h2>
+        <p class="text-gray-500 mb-1">{{ event.category.name }}</p>
+        <p class="text-gray-600 mb-1">{{ event.date }} at {{ event.time }}</p>
+        <p class="text-gray-600 mb-2">Location: {{ event.location }}</p>
+        <p class="text-gray-600 mb-4">
+          Participants: {{ event.participants.count }}
+        </p>
+        <a
+          href="{% url 'event_detail' event.id %}"
+          class="text-blue-600 font-semibold hover:underline mt-auto"
+          >View Details</a
+        >
+      </div>
+      {% empty %}
+      <p class="col-span-3 py-5 text-red-600 text-lg text-center ">No events found.</p>
+      {% endfor %}
+    </div>
+
+    <!-- Show All Button -->
+    <div class="flex justify-center mt-10">
+      <a
+        href="{% url 'event_list' %}"
+        class="bg-red-500 text-white px-6 py-3 rounded-lg shadow hover:bg-red-600 transition"
+      >
+        Show All Events
+      </a>
+    </div>
   </section>
+  {% endblock content %}
 </div>
-{% endblock content %}

@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard - Event Manager</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+  </head>
+  <body class="bg-gray-50">
+    {% include "events/navbar.html" %}
+
+    <section class="py-8">
+      <div class="container mx-auto px-6">
+        <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+
+        <div
+          class="grid  grid-cols-5  gap-6 mb-8 w-full"
+        >
+          <a
+            href="?type=events"
+            class="bg-blue-100 p-6 rounded-xl shadow hover:bg-blue-200 transition block text-center w-full"
+          >
+            <h3 class="text-gray-700 mb-2">Total Events</h3>
+            <p class="text-3xl font-extrabold text-blue-700">
+              {{ counts.events.total }}
+            </p>
+          </a>
+          <a
+            href="?type=participants"
+            class="bg-green-100 p-6 rounded-xl shadow hover:bg-green-200 transition block text-center w-full"
+          >
+            <h3 class="text-gray-700 mb-2">Participants</h3>
+            <p class="text-3xl font-extrabold text-green-700">
+              {{ counts.participants.total }}
+            </p>
+          </a>
+          <a
+            href="?type=categories"
+            class="bg-purple-100 p-6 rounded-xl shadow hover:bg-purple-200 transition block text-center w-full"
+          >
+            <h3 class="text-gray-700 mb-2">Categories</h3>
+            <p class="text-3xl font-extrabold text-purple-700">
+              {{ counts.categories.total }}
+            </p>
+          </a>
+          <a
+            href="?type=upcoming"
+            class="bg-orange-100 p-6 rounded-xl shadow hover:bg-orange-200 transition block text-center w-full"
+          >
+            <h3 class="text-gray-700 mb-2">Upcoming Events</h3>
+            <p class="text-3xl font-extrabold text-orange-700">
+              {{ counts.events.upcoming }}
+            </p>
+          </a>
+          <a
+            href="?type=past"
+            class="bg-red-100 p-6 rounded-xl shadow hover:bg-red-200 transition block text-center w-full"
+          >
+            <h3 class="text-gray-700 mb-2">Past Events</h3>
+            <p class="text-3xl font-extrabold text-red-700">
+              {{ counts.events.past }}
+            </p>
+          </a>
+        </div>
+
+        <div class="data-section">
+          {% if data_type in "events upcoming_events past_events" %}
+          <div class="flex justify-between mb-4">
+            <a
+              href="{% url 'event_create' %}"
+              class="bg-blue-600 mt-5 text-white px-4 py-2 rounded hover:bg-blue-700 "
+            >
+              + Add Event
+            </a>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for event in data %}
+            <div class="bg-white p-4 rounded shadow">
+              <h3 class="text-lg font-bold">{{ event.name }}</h3>
+              <p class="text-sm text-gray-600">
+                {{ event.date }} at {{ event.location }}
+              </p>
+              <div class="mt-2 flex">
+                <a
+                  href="{% url 'event_detail' event.id %}"
+                  class="text-blue-600 hover:underline mr-4 bg-green-200 py-2 px-4 my-5 rounded-lg"
+                  >View</a
+                >
+                <a
+                  href="{% url 'event_update' event.id %}"
+                  class="text-yellow-600 hover:underline mr-4 bg-blue-500 py-2 px-4 my-5 rounded-lg"
+                  >Edit</a
+                >
+                <a
+                  href="{% url 'event_delete' event.id %}"
+                  class="text-red-600 hover:underline mr-4 bg-red-200 py-2 px-4 my-5 rounded-lg"
+                  >Delete</a
+                >
+              </div>
+            </div>
+            {% empty %}
+            <p>No events found.</p>
+            {% endfor %}
+          </div>
+
+          {% elif data_type == "participants" %}
+          <div class="flex justify-between mb-4">
+            <h2 class="text-xl font-semibold">Participants</h2>
+            <a
+              href="{% url 'participant_create' %}"
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              + Add Participant
+            </a>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for p in data %}
+            <div class="bg-white p-4 rounded shadow">
+              <h3 class="text-lg font-bold">{{ p.name }}</h3>
+              <p class="text-sm text-gray-600">{{ p.email }}</p>
+              <div class="mt-2 flex gap-2">
+                <a
+                  href="{% url 'participant_update' p.id %}"
+                  class="text-yellow-600 hover:underline mr-4 bg-blue-500 py-2 px-4 my-5 rounded-lg"
+                  >Edit</a
+                >
+                <a
+                  href="{% url 'participant_delete' p.id %}"
+                  class="text-red-600 hover:underline mr-4 bg-red-200 py-2 px-4 my-5 rounded-lg"
+                  >Delete</a
+                >
+              </div>
+            </div>
+            {% empty %}
+            <p>No participants found.</p>
+            {% endfor %}
+          </div>
+
+          {% elif data_type == "categories" %}
+          <div class="flex justify-between mb-4">
+            <h2 class="text-xl font-semibold">Categories</h2>
+            <a
+              href="{% url 'category_create' %}"
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              + Add Category
+            </a>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for c in data %}
+            <div class="bg-white p-4 rounded shadow">
+              <h3 class="text-lg font-bold">{{ c.name }}</h3>
+              <p class="text-sm text-gray-600">{{ c.description }}</p>
+              <div class="mt-2 flex gap-5">
+                <a
+                  href="{% url 'category_update' c.id %}"
+                  class="text-yellow-600 hover:underline mr-4 bg-blue-500 py-2 px-4 my-5 rounded-lg"
+                  >Edit</a
+                >
+                <a
+                  href="{% url 'category_delete' c.id %}"
+                  class="text-red-600 hover:underline mr-4 bg-red-200 py-2 px-4 my-5 rounded-lg"
+                  >Delete</a
+                >
+              </div>
+            </div>
+            {% empty %}
+            <p>No categories found.</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
