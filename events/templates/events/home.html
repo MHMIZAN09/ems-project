@@ -6,9 +6,23 @@
     <div class="flex justify-center items-center h-full">
       <h1 class="text-5xl text-white font-bold">Welcome to Event Management</h1>
     </div>
-
     
   </div>
-  <div></div>
+  <section
+    class="bg-green-100 mx-auto flex justify-center items-center py-8"
+  >
+    <form action="" class="flex gap-4 items-center bg-white rounded-lg shadow-lg p-6">
+      <input
+        type="search"
+        class="p-4 text-black w-[400px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300 transition"
+        placeholder="Search by event name"
+        name=""
+        id=""
+      />
+      <button class="bg-red-500 hover:bg-red-600 text-white p-4 rounded-lg font-semibold shadow transition">
+        Search
+      </button>
+    </form>
+  </section>
 </div>
 {% endblock content %}
